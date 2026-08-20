@@ -1,28 +1,29 @@
 import Publicacion from "./publicacion.js";
+import Usuario from "./usuario.js";
 
 const publicaciones = [
     new Publicacion(
         "Busco compañero Proyecto",
         "Busco compañero para proyecto de LDAW",
-        "Juan Pérez"
+        new Usuario("Juan Pérez", "juan.perez@example.com") // el autor ahora es un objeto Usuario
     ),
 
     new Publicacion(
         "Se ofrece ayuda con Node.js",
         "Si necesitas ayuda con Node.js, puedo ayudarte",
-        "María López"
+        new Usuario("María López", "maria.lopez@example.com")
     ),
 
     new Publicacion(
         "Resumen examen final LDAW",
         "Resumen del examen final de LDAW",
-        "Carlos García"
+        new Usuario("Carlos García", "carlos.garcia@example.com")
     ),
 
     new Publicacion(
         "Rifa recaudar fondos",
         "Se realiza una rifa para recaudar fondos para el proyecto final",
-        "Ana Fernández"
+        new Usuario("Ana Fernández", "ana.fernandez@example.com")
     ),
 ];
 

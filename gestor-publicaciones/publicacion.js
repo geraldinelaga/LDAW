@@ -1,8 +1,10 @@
+import Usuario from './usuario.js';
 class Publicacion {
-    constructor(titulo, descripcion, autor){
+    constructor(titulo, descripcion, Usuario){
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.autor = autor;
+        // this.autor = autor;
+        this.usuario = Usuario; // pasa de autor (string) a Usuario (objeto)
 
         // Se guarda automáticamente la fecha y hora de creación
         this.fechaPublicacion = new Date();
@@ -11,7 +13,7 @@ class Publicacion {
     }
 
     mostrarResumen(){
-        return `${this.titulo} - ${this.autor}`;
+        return `${this.titulo} - ${this.usuario}`;
     }
 
     estaActiva(){
