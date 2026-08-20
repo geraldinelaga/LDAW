@@ -1,6 +1,21 @@
 import Publicacion from "./publicacion.js";
 import Usuario from "./usuario.js";
 
+const usuarios = [
+    new Usuario(
+        "Juan Pérez",
+        "juan.perez@example.com"
+    ),
+     new Usuario(
+        "Maria López",
+        "maria.lopez@example.com"
+     ),
+     new Usuario(
+        "Carlos García",
+        "carlos.garcia@example.com"
+     )
+]
+
 const publicaciones = [
     new Publicacion(
         "Busco compañero Proyecto",
@@ -23,60 +38,21 @@ const publicaciones = [
     new Publicacion(
         "Rifa recaudar fondos",
         "Se realiza una rifa para recaudar fondos para el proyecto final",
-        new Usuario("Ana Fernández", "ana.fernandez@example.com")
+        new Usuario("Juan Pérez", "juan.perez@example.com")
     ),
 ];
 
-publicaciones[2].activa = false;
-
-//recorrer e imprimir cada publicación
-
-console.log("PUBLICACIONES");
-console.log("=====================");
-
-for (const publicacion of publicaciones) {
+publicaciones.forEach(publicacion => {
     console.log(publicacion.mostrarResumen());
-    console.log(`Activa: ${publicacion.estaActiva()}`);
+});
+
+const publicacionesActivas = publicaciones.filter(publicacion => publicacion.estaActiva());
+
+console.log("Publicaciones activas:" + publicacionesActivas.length);
+
+const primeraPublicacion = publicaciones.find(publicacion => publicacion.usuario.nombre === "Juan Pérez");
+if (primeraPublicacion) {
+    console.log("Primera publicación de Juan Pérez: " + primeraPublicacion.mostrarResumen());
 }
 
-const p = new Publicacion(
-    "Musica para estudiar",
-    "Una selección de música para estudiar y concentrarse",
-    "Laura Martínez"
-);
 
-p.activa = false;
-
-publicaciones.push(p);
-
-// Contar publicaciones activas
-
-console.log("=====================");
-const activas = publicaciones.filter((p) => p.estaActiva());
-
-console.log("Publicaciones activas:", activas.length);
-
-//Imprimir titulos de publicaciones activas
-
-console.log("=====================");
-
-console.log("Títulos de publicaciones activas:");
-
-for (const p of activas) {
-  console.log(p.titulo);
-}
-
-// Verificación: modificar solo una publicación.
-console.log("=====================");
-console.log("VERIFICACIÓN");
-console.log("=====================");
-publicaciones[0].titulo = "NUEVO TITULO";
-
-console.log(publicaciones[0].mostrarResumen());
-console.log(publicaciones[1].mostrarResumen());
-
-
-const publicacionesJSON = JSON.stringify(publicaciones, null, 2);
-console.log(publicacionesJSON);
-// JSON.stringify convierte los objetos a texto JSON.
-// Los métodos no se guardan porque JSON representa datos, no funciones.

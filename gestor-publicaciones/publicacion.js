@@ -13,7 +13,7 @@ class Publicacion {
     }
 
     mostrarResumen(){
-        return `${this.titulo} - ${this.usuario}`;
+        return `${this.titulo} - ${this.usuario.mostrarPerfil()}`;
     }
 
     estaActiva(){
