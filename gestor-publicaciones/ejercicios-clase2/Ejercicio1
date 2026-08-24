@@ -1,0 +1,24 @@
+// ¿Asociación o dependencia? — Casos de código 
+
+//Para cada fragmento, indiquen si el vínculo entre las clases es una asociación o una dependencia, y justifiquen usando los criterios vistos en la teoría (¿se guarda como atributo?, ¿el vínculo persiste en el tiempo?, ¿o se recibe como parámetro y se usa una sola vez?).
+
+
+// Caso A
+class Factura {
+ constructor(numero, cliente) {
+ this.numero = numero;
+ this.cliente = cliente; // objeto Cliente //ASOCIACIÓN: se guarda como atributo y el vínculo dura lo que dura el objeto
+ }
+}
+// Caso B
+class Factura {
+ aplicarImpuesto(calculadora) {
+ return calculadora.calcular(this.total);  //DEPENDECIA: se recibe como parámetro y se usa una sola vez, no se guarda como atributo y el vínculo no persiste en el tiempo
+ }
+}
+// Caso C
+class Biblioteca {
+ constructor() {
+ this.libros = []; // array de objetos Libro //ASOCIACIÓN: porque se guarda como atributo
+ }
+}

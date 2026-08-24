@@ -1,0 +1,31 @@
+//Les damos la clase PublicacionServicio (adelanto de lo que viene en la Clase 3). Encuentren todos los lugares donde una clase usa a otra sin guardarla como atributo, y marquen cuáles son dependencias.
+// • Listen todas las clases con las que se relaciona PublicacionServicio.
+// • Para cada una, clasifiquen el vínculo (asociación / dependencia) y justifiquen.
+// • ¿Cambiaría su respuesta si servicioNotificaciones se guardara en el constructor como this.notificador? ¿Por qué?
+
+class PublicacionServicio {
+ constructor(titulo, autor, precioHora) {
+ this.titulo = titulo;
+ this.autor = autor;
+ this.precioHora = precioHora;
+ }
+ calcularCosto(horasContratadas) {
+ return this.precioHora * horasContratadas;
+ }
+ aplicarCupon(cupon) {
+ const costo = this.calcularCosto(2);
+ return costo - cupon.calcularDescuento(costo);
+ }
+ notificar(servicioNotificaciones, mensaje) {
+ servicioNotificaciones.enviar(this.autor.email, mensaje);
+ }
+}
+
+// Clases relacionadas con PublicacionServicio: 
+// 1. Cupón: Dependencia, ya que se recibe como parámetro en aplicarCupon(cupon) y se usa una sola vez para calcular el descuento, no se guarda como atributo.
+// 2. ServicioNotificaciones: Dependencia, se recibe como parámetro en notificar() y se usa una sola vez para enviar la notificación, no se guarda como atributo.
+//3. Autor: Asociación, ya que se guarda como atributo en el constructor (this.autor = autor) y el vínculo persiste mientras exista en la instancia de la clase PublicacionServicio.
+//4. Ttiulo: Asociación, se guarda como atributo en el constructor (this.titulo = titulo) y el vínculo persiste mientras exista en la instancia PublicacionServicio.
+//5. PrecioHora: Asociación, se guarda como atributo en el constructor (this.precioHora = precioHora) y el vínculo persiste mientras exista en la instancia PublicacionServicio.
+
+//Si servicioNotificaciones se guardara en el constructor como this.notificador, el vínculo cambiaría a Asociación ya que se mantendría como atributo de la clase PublicacionServicio y el vículo persistiría mientras exista esa instancia.

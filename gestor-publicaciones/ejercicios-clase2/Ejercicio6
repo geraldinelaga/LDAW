@@ -1,0 +1,95 @@
+// forEach sobre publicaciones
+
+//Usando el array de publicaciones de la práctica de hoy (o RepositorioPublicaciones.publicaciones), escriban un forEach que imprima, para cada publicación, el título, el nombre del autor y hace cuántos días fue publicada (a partir de fechaPublicacion).
+
+//No usen un for tradicional: la consigna es practicar forEach.
+//Si alguna publicación no tiene autor asignado (undefined), el programa no debe romperse: agreguen una verificación.
+
+
+// filter encadenado 
+
+//Sobre el mismo array de publicaciones, escriban una función publicacionesRecientesYActivas(publicaciones, dias) que devuelva solo las publicaciones activas y publicadas en los últimos dias días, usando filter (pueden encadenar dos filter o combinar las condiciones en uno solo).
+//Prueben la función con al menos dos valores distintos de dias.
+//¿El array que devuelve filter es el mismo array original o uno nuevo? Compruébenlo modificando el resultado y verificando que el original no cambie.
+
+
+import Publicacion from "../publicacion.js";
+import Usuario from "../usuario.js";
+
+const publicaciones = [
+    new Publicacion(
+        "Busco compañero Proyecto",
+        "Busco compañero para proyecto de LDAW",
+        new Usuario("Juan Pérez", "juan.perez@example.com")
+    ),
+
+    new Publicacion(
+        "Se ofrece ayuda con Node.js",
+        "Si necesitas ayuda con Node.js, puedo ayudarte",
+        new Usuario("María López", "maria.lopez@example.com")
+    ),
+
+    new Publicacion(
+        "Resumen examen final LDAW",
+        "Resumen del examen final de LDAW",
+        new Usuario("Carlos García", "carlos.garcia@example.com")
+    ),
+    new Publicacion(
+        "Rifa recaudar fondos",
+        "Se realiza una rifa para recaudar fondos para el proyecto final", undefined
+    )
+];
+
+publicaciones.forEach(publicacion => {
+
+    // Obtenemos la diferencia entre la fecha actual y la fecha de publicación.
+    // Date.now() nos da la fecha actual en milisegundos.
+    // getTime() nos da la fecha de publicación también en milisegundos.
+    const diferencia = Date.now() - publicacion.fechaPublicacion.getTime();
+
+    // Convertimos la diferencia de milisegundos a días.
+    // 1000 milisegundos = 1 segundo
+    // 60 segundos = 1 minuto
+    // 60 minutos = 1 hora
+    // 24 horas = 1 día
+    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+
+    // Math.floor() redondea un número hacia abajo.
+    // Por ejemplo: Math.floor(3.8) devuelve 3.
+    // Lo usamos para obtener solamente los días completos.
+
+    console.log(`Título: ${publicacion.titulo}`);
+
+    //Verificamos si la publicación tiene un usuario asociado.
+       if (publicacion.usuario) {
+        console.log(`Autor: ${publicacion.usuario.nombre}`);
+    } else {
+        console.log("Autor: Sin Autor");
+    }
+
+    console.log(`Hace ${dias} días`);
+    console.log("--------------------")
+});
+
+function publicacionesRecientesYActivas(publicaciones, dias) {
+    return publicaciones
+        .filter(publicacion => publicacion.estaActiva())
+        .filter(publicacion => {
+           const diferencia = Date.now() - publicacion.fechaPublicacion.getTime();
+           const diasTranscurridos = Math.floor( diferencia / (1000 * 60 * 60 * 24));
+           return diasTranscurridos <= dias;
+        });      
+}
+
+console.log(publicacionesRecientesYActivas(publicaciones, 5));
+console.log(publicacionesRecientesYActivas(publicaciones, 0));
+
+const resultado = publicacionesRecientesYActivas(publicaciones, 5);
+
+console.log("Resultado antes de modificar:", resultado);
+
+resultado.pop();
+
+console.log("Resultado después de modificar:", resultado);
+
+console.log("Array original:", publicaciones);

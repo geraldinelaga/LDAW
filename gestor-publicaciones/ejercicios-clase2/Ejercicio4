@@ -1,0 +1,72 @@
+//Creen la clase LocalDeHelados con un array interno de pedidos (this.pedidos = []) y los métodos registrarPedido(pedido) y pedidosDe(nombreCliente).
+
+//Instancien un LocalDeHelados, registren al menos cinco Pedido de al menos tres Cliente distintos.
+ //¿Qué tipo de vínculo es LocalDeHelados con Pedido? ¿Y Pedido con Cliente? Anoten ambas respuestas antes de programar.
+ //pedidosDe(nombreCliente) debe usar filter sobre el array de pedidos.
+
+
+//LocalDeHelados puede tener muchos Pedidos, y cada Pedido pertenece a un solo LocalDeHelados. Entonces, la relación entre LocalDeHelados y Pedido es de uno a muchos.
+
+//Pedido puede tener un solo Cliente, y cada Cliente puede tener muchos Pedidos. Entonces, la relación entre Pedido y Cliente es de uno a muchos.
+
+
+class LocalDeHelados {
+    constructor() {
+        this.pedidos = [];
+    }
+
+    registrarPedido(pedido) {
+        this.pedidos.push(pedido);
+    }
+
+    pedidosDe(nombreCliente){
+        return this.pedidos.filter(p => p.cliente.nombreCliente === nombreCliente);
+    }
+}
+
+class Cliente {
+    constructor(nombreCliente, telefono) {
+        this.nombreCliente = nombreCliente;
+        this.telefono = telefono;
+    }
+
+    mostrarCliente(){
+        return `${this.nombreCliente} - ${this.telefono}`;
+    }
+
+}
+
+class Pedido { 
+    constructor(cliente, total) {
+        this.cliente = cliente;
+        this.total = total;
+    }
+
+    
+}
+ 
+//Instanciamos Clientes 
+
+const cliente1 = new Cliente("Juan", "12345689");
+const cliente2 = new Cliente("Maria", "987654321");
+const cliente3 = new Cliente("Pedro", "45689123");
+
+//Instanciamos Pedidos
+
+const pedido1 = new Pedido(cliente1, "chocolate");
+const pedido2 = new Pedido(cliente2, "vainilla");
+const pedido3 = new Pedido(cliente1, "frutilla");
+const pedido4 = new Pedido(cliente3, "ddl");
+const pedido5 = new Pedido(cliente2, "chocolate");
+
+//Instanciamos LocalDeHelados
+
+const local = new LocalDeHelados();
+//Registro los pedidos del local a partir del método registrarPedido
+local.registrarPedido(pedido1);
+local.registrarPedido(pedido2);
+local.registrarPedido(pedido3);
+local.registrarPedido(pedido4);
+local.registrarPedido(pedido5);
+
+console.log(local.pedidosDe("Juan")); 

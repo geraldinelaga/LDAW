@@ -1,0 +1,44 @@
+// Retomen el ejemplo de la heladería. Creen la clase Cupón con atributos codigo y porcentajeDescuento, y un método calcularDescuento(monto) que devuelva el monto descontado.
+
+//Luego, en la clase Pedido, agreguen un método aplicarCupon(cupon) que reciba un objeto Cupón y devuelva el total del pedido con el descuento aplicado.
+
+//¿Pedido debería guardar el cupón como atributo (this.cupon = cupon) o recibirlo solo como parámetro del método? Elijan una opción y justifiquen con el criterio de persistencia del vínculo.
+
+//Prueben aplicarCupon() con dos pedidos distintos y el mismo objeto Cupón. ¿Que pa
+
+class Cupon {
+    constructor(codigo, porcentajeDescuento){
+        this.codigo = codigo; // tipo string
+        this.porcentajeDescuento = porcentajeDescuento; // tipo number
+    }
+
+    calcularDescuento(monto) {
+        return monto * (this.porcentajeDescuento / 100);
+    }
+}
+
+class Pedido {
+    constructor(total) {
+        this.total = total; // tipo number
+    }
+
+    aplicarCupon(cupon) {
+        const descuento = cupon.calcularDescuento(this.total);
+        return this.total - descuento;
+    }
+}
+
+// Pedido debe recibir el cupón como parámetro del método aplicarCupon() y no guardarlo como atributo, ya que el vínculo con el cupón no necesita persistir en el tiempo. Cada vez que se aplique un cupón, se puede pasar un objeto cupón diferente y no es necesario que el pedido mantenga una referencia del cupón después de aplicar el descuento. 
+
+
+const cupon = new Cupon("DESCUENTO10", 10);
+const pedido1 = new Pedido(100);
+const pedido2 = new Pedido(200);
+
+const totalConDescuento1 = pedido1.aplicarCupon(cupon);
+const totalConDescuento2 = pedido2.aplicarCupon(cupon);
+
+console.log(`Total del pedido 1 con descuento: ${totalConDescuento1}`);
+console.log(`Total del pedido 2 con descuento: ${totalConDescuento2}`);
+
+// Aplicando el mismo objeto cupón a dos pedidos distintos se obtiene el descuento correspondiente en cada caso, demostrando que no es necesario guardar el cupón como atributo del pedido.

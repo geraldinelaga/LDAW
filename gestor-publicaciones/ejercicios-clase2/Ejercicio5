@@ -1,0 +1,35 @@
+// Refactor: de string a objeto asociado
+//Les damos una clase Reserva mal modelada, donde el restaurante se guarda como string. Refactorícenla para que restaurante sea un objeto Restaurante asociado, siguiendo el mismo patrón que usaron con Publicacion y Usuario.
+
+//Creen la clase Restaurante con nombre y direccion.
+//Modifiquen Reserva y mostrarResumen() para usar el objeto asociado.
+//Expliquen en un comentario qué información se podía perder con la versión en string, siguiendo el mismo razonamiento del ejemplo de Rocío en la teoría.
+
+
+// versión a refactorizar
+class Reserva {
+ constructor(fecha, cantidadPersonas, restaurante) {
+ this.fecha = fecha;
+ this.cantidadPersonas = cantidadPersonas;
+ this.restaurante = restaurante; // string, ej: "La Parrilla" => objeto.
+ }
+ mostrarResumen() {
+ return `Reserva en ${this.restaurante.nombre} para ${this.cantidadPersonas}`; 
+ } // de this.restaurante a this.restaurante.nombre porque ahora this.restaurante es un objeto
+}
+
+class Restaurante {
+    constructor(nombre, direccion) {
+        this.nombre = nombre;
+        this.direccion = direccion;
+    }
+}
+
+// Al guardar el restaurante como string solo conservábamos su nombre
+// Al asociarlo con un objeto Restaurante podemos conservar más información, como su nombre y dirección, y acceder a esos datos desde la Reserva.
+
+const restaurante1 = new Restaurante ("La Parrilla", "Av. Alem 123");
+const reserva1 = new Reserva ("21/08/2026", 4, restaurante1);
+
+console.log(reserva1.mostrarResumen());
+
