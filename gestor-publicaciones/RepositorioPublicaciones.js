@@ -1,65 +1,72 @@
 class RepositorioPublicaciones {
-    constructor (){
-        this.publicaciones = [];
-    }
+  constructor() {
+    this.publicaciones = [];
+  }
 
-    agregar(publicacion){
-        this.publicaciones.push(publicacion);
-    }
+  agregar(publicacion) {
+    this.publicaciones.push(publicacion);
+  }
 
-    buscarPorUsuario(nombre){
-        return this.publicaciones.filter(p => p.usuario.nombre === nombre);
-    }
+  buscarPorUsuario(nombre) {
+    return this.publicaciones.filter((p) => p.usuario.nombre === nombre);
+  }
 
-    filtrarActivas(){
-        return this.publicaciones.filter(p => p.estaActiva());
-    }
+  filtrarActivas() {
+    return this.publicaciones.filter((p) => p.estaActiva());
+  }
 
-    cantidadTotal(){ 
-        return this.publicaciones.length;
-    }
+  cantidadTotal() {
+    return this.publicaciones.length;
+  }
 
-    //publicacionMasReciente → forEach porque hay que comparar fechas. 
-    publicacionMasReciente() {
-        let masReciente = this.publicaciones[0];
+  listarPorTipo(claseConstructor) {
+    return this.publicaciones.filter(
+      (publicacion) => publicacion instanceof claseConstructor,
+    );
+  }
 
-        this.publicaciones.forEach( publicacion => {
-            if (publicacion.fechaPublicacion > masReciente.fechaPublicacion){
-                masReciente = publicacion;
-            }
-        });
-        return masReciente;
-    }
+  //publicacionMasReciente → forEach porque hay que comparar fechas.
+  publicacionMasReciente() {
+    let masReciente = this.publicaciones[0];
 
-    //cantidadPorUsuario → filter porque quiero contar varios. 
-    cantidadPorUsuario(nombre) {
-        const publicacionesUsuario = this.publicaciones.filter(
-            publicacion => publicacion.usuario?.nombre === nombre
-        );
+    this.publicaciones.forEach((publicacion) => {
+      if (publicacion.fechaPublicacion > masReciente.fechaPublicacion) {
+        masReciente = publicacion;
+      }
+    });
+    return masReciente;
+  }
 
-        return publicacionesUsuario.length;
-    }
+  //cantidadPorUsuario → filter porque quiero contar varios.
+  cantidadPorUsuario(nombre) {
+    const publicacionesUsuario = this.publicaciones.filter(
+      (publicacion) => publicacion.usuario?.nombre === nombre,
+    );
 
-    //existePublicacionActiva → find porque con encontrar uno alcanza.
+    return publicacionesUsuario.length;
+  }
 
-    existePublicacionActiva(titulo) {
-        const resultado = this.publicaciones.find(publicacion => {
-            return publicacion.estaActiva() && 
-            publicacion.titulo.toLowerCase() === titulo.toLowerCase();
-        });
+  //existePublicacionActiva → find porque con encontrar uno alcanza.
 
-        return resultado !== undefined;
-    }
+  existePublicacionActiva(titulo) {
+    const resultado = this.publicaciones.find((publicacion) => {
+      return (
+        publicacion.estaActiva() &&
+        publicacion.titulo.toLowerCase() === titulo.toLowerCase()
+      );
+    });
 
-    //resumenGeneral → forEach porque quiero recorrer e imprimir los activos.
-    resumenGeneral() {
-        this.publicaciones.forEach(publicacion => {
-            if (publicacion.estaActiva()) {
-                console.log(publicacion.mostrarResumen());
-            }
-        });
-    }
+    return resultado !== undefined;
+  }
+
+  //resumenGeneral → forEach porque quiero recorrer e imprimir los activos.
+  resumenGeneral() {
+    this.publicaciones.forEach((publicacion) => {
+      if (publicacion.estaActiva()) {
+        console.log(publicacion.mostrarResumen());
+      }
+    });
+  }
 }
 
 export default RepositorioPublicaciones;
-

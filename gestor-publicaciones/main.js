@@ -1,6 +1,8 @@
 import Publicacion from "./publicacion.js";
 import Usuario from "./usuario.js";
 import RepositorioPublicaciones from "./RepositorioPublicaciones.js";
+import PublicacionVenta  from "./PublicacionVenta.js";
+import PublicacionServicio  from "./PublicaacionServicio.js";
 
 const usuarios = [
     new Usuario(
@@ -18,31 +20,34 @@ const usuarios = [
 ]
 
 const publicaciones = [
-    new Publicacion(
-        "Busco compañero Proyecto",
-        "Busco compañero para proyecto de LDAW",
-        new Usuario("Juan Pérez", "juan.perez@example.com") // el autor ahora es un objeto Usuario
+    new PublicacionVenta(
+        "Apuntes de LDAW",
+        "Apuntes completos para preparar el examen de LDAW",
+        new Usuario("Juan Pérez", "juan.perez@example.com"),
+        5000
     ),
 
-    new Publicacion(
-        "Se ofrece ayuda con Node.js",
-        "Si necesitas ayuda con Node.js, puedo ayudarte",
-        new Usuario("María López", "maria.lopez@example.com")
+    new PublicacionServicio(
+        "Clases de Node.js",
+        "Clases particulares de Node.js",
+        new Usuario("María López", "maria.lopez@example.com"),
+        3000
     ),
 
-    new Publicacion(
+    new PublicacionVenta(
         "Resumen examen final LDAW",
         "Resumen del examen final de LDAW",
-        new Usuario("Carlos García", "carlos.garcia@example.com")
+        new Usuario("Carlos García", "carlos.garcia@example.com"),
+        4000
     ),
 
-    new Publicacion(
-        "Rifa recaudar fondos",
-        "Se realiza una rifa para recaudar fondos para el proyecto final",
-        new Usuario("Juan Pérez", "juan.perez@example.com")
-    ),
+    new PublicacionServicio(
+        "Ayuda con proyecto de LDAW",
+        "Ayuda para realizar el proyecto final",
+        new Usuario("Juan Pérez", "juan.perez@example.com"),
+        3500
+    )
 ];
-
 console.log("Publicaciones:");
 console.log("================================");
 
@@ -94,3 +99,22 @@ console.log("================================");
 const totalPublicacionesRepositorio = repositorio.cantidadTotal();
 console.log("Total de publicaciones en el repositorio:" + totalPublicacionesRepositorio);
 
+publicaciones.forEach((p) => {
+    console.log(p instanceof Publicacion);
+});
+
+console.log("================================");
+
+const publicacionesVenta = repositorio.listarPorTipo(PublicacionVenta);
+
+console.log("Publicaciones de venta:", publicacionesVenta);
+
+const publicacionesServicio = repositorio.listarPorTipo(PublicacionServicio);
+
+console.log("Publicaciones de servicio:", publicacionesServicio);
+
+console.log("================================");
+
+publicaciones.forEach(publicacion => {
+    console.log(publicacion instanceof Publicacion);
+});
