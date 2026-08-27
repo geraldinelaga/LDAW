@@ -1,10 +1,14 @@
-class RepositorioPublicaciones {
+import { EventEmitter } from "node:events";
+
+class RepositorioPublicaciones extends EventEmitter {
   constructor() {
+    super();
     this.publicaciones = [];
   }
 
   agregar(publicacion) {
     this.publicaciones.push(publicacion);
+    this.emit("publicacionAgregada", publicacion);
   }
 
   buscarPorUsuario(nombre) {
@@ -66,6 +70,21 @@ class RepositorioPublicaciones {
         console.log(publicacion.mostrarResumen());
       }
     });
+  }
+
+  //Devuelve un array conel mostrarResumen()de cada publicación, usando .map().
+  listarResumen() {
+    return this.publicaciones.map((publicacion) =>
+      publicacion.mostrarResumen(),
+    );
+  }
+
+  //Devuelve solo las publicaciones que son instancia de una clase recibida.
+
+  filtrarPorTipo(claseConstructor) {
+    return this.publicaciones.filter(
+      (publicaciones) => publicaciones instanceof claseConstructor,
+    );
   }
 }
 
