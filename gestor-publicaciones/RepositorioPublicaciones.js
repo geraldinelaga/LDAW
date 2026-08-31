@@ -12,7 +12,7 @@ class RepositorioPublicaciones extends EventEmitter {
   }
 
   buscarPorUsuario(nombre) {
-    return this.publicaciones.filter((p) => p.usuario.nombre === nombre);
+    return this.publicaciones.filter((p) => p.autor?.nombre === nombre);
   }
 
   filtrarActivas() {
@@ -44,7 +44,7 @@ class RepositorioPublicaciones extends EventEmitter {
   //cantidadPorUsuario → filter porque quiero contar varios.
   cantidadPorUsuario(nombre) {
     const publicacionesUsuario = this.publicaciones.filter(
-      (publicacion) => publicacion.usuario?.nombre === nombre,
+      (publicacion) => publicacion.autor?.nombre === nombre,
     );
 
     return publicacionesUsuario.length;

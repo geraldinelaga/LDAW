@@ -1,5 +1,5 @@
 export function validarPublicacion(publicacion, reglas){
-    if (publicacion.titulo || publicacion.titulo.length !== reglas.minTitulo) {
+    if (!publicacion.titulo || publicacion.titulo.length < reglas.minTitulo) {
         return false;
     }
 
@@ -7,5 +7,5 @@ export function validarPublicacion(publicacion, reglas){
         return false;
     }
 
-return true;
+    return true;
 }

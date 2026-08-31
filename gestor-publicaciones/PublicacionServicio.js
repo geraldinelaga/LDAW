@@ -1,10 +1,11 @@
 import Publicacion from "./publicacion.js";
 
 export default class PublicacionServicio extends Publicacion {
-  constructor(titulo, descripcion, autor, modalidad, duracionMinutos) {
+  constructor(titulo, descripcion, autor, modalidad, duracionMinutos, cliente = null) {
     super(titulo, descripcion, autor);
     this.modalidad = modalidad;
     this.duracionMinutos = duracionMinutos;
+    this.cliente = cliente;
   }
 
   mostrarResumen() {

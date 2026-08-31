@@ -1,10 +1,9 @@
 import Usuario from "./usuario.js";
 class Publicacion {
-  constructor(titulo, descripcion, Usuario) {
+  constructor(titulo, descripcion, autor) {
     this.titulo = titulo;
     this.descripcion = descripcion;
-    // this.autor = autor;
-    this.usuario = Usuario; // pasa de autor (string) a Usuario (objeto)
+    this.autor = autor;
 
     // Se guarda automáticamente la fecha y hora de creación
     this.fechaPublicacion = new Date();
@@ -16,7 +15,7 @@ class Publicacion {
   }
 
   mostrarResumen() {
-    return `${this.titulo} - ${this.usuario.mostrarPerfil()}`;
+    return `${this.titulo} - ${this.autor.mostrarPerfil()}`;
   }
 
   estaActiva() {
@@ -44,15 +43,13 @@ class Publicacion {
   enviarResumenPorEmail(servicioDeEmail) {
     const resumen = this.mostrarResumen();
 
-    servicioDeEmail.enviar(
-        this.usuario.email,
-        resumen
-    );
-    
-    //no guardo this.servicioDeEmail = servicioDeEmail, lo uso => servicioDeEmail.enviar(...). Por eso es una dependencia
+    servicioDeEmail.enviar(this.autor.email, resumen);
+  }
+
+  diasPublicada() {
+    const ms = new Date() - this.fechaPublicacion;
+    return Math.floor(ms / (1000 * 60 * 60 * 24)); //la operación lo pasa a días y el floor redondea para abajo.
   }
 }
-
-
 
 export default Publicacion;

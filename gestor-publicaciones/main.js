@@ -60,7 +60,7 @@ console.log("Publicaciones activas:" + publicacionesActivas.length);
 console.log("================================");
 
 const primeraPublicacion = publicaciones.find(
-  (publicacion) => publicacion.usuario.nombre === "Juan Pérez",
+  (publicacion) => publicacion.autor.nombre === "Juan Pérez",
 );
 if (primeraPublicacion) {
   console.log(
@@ -132,6 +132,16 @@ const soloServicios = repositorio.filtrarPorTipo(PublicacionServicio);
 console.log("Ventas:", soloVentas);
 console.log("Servicios:", soloServicios);
 
+
+// Juan agrega a María y a Carlos a su lista de contactos
+usuarios[0].agregarContacto(usuarios[1]);
+usuarios[0].agregarContacto(usuarios[2]);
+
+// Verificás que la auto-asociación guardó correctamente las instancias
+console.log(`Contactos`)
+console.log(usuarios[0].contactos);
+
+
 //Listeners
 
 const repositorioListener = new RepositorioPublicaciones();
@@ -168,5 +178,4 @@ async function main() {
   repositorio.agregar(publicacion);
   console.log("Esto se imprime después de la demora")
 }
-
 main();
