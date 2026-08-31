@@ -3,179 +3,73 @@ import Usuario from "./usuario.js";
 import RepositorioPublicaciones from "./RepositorioPublicaciones.js";
 import PublicacionVenta from "./PublicacionVenta.js";
 import PublicacionServicio from "./PublicacionServicio.js";
-import { publicarConDemora } from "./publicarConDemora.js";
+import { validarPublicacion } from "./validarPublicacion.js";
 
+console.log("=== 1. CREACIÓN DE USUARIOS Y AUTO-ASOCIACIÓN ===");
 const usuarios = [
   new Usuario("Juan Pérez", "juan.perez@example.com"),
   new Usuario("Maria López", "maria.lopez@example.com"),
   new Usuario("Carlos García", "carlos.garcia@example.com"),
 ];
 
-const publicaciones = [
-  new PublicacionVenta(
-    "Apuntes de LDAW",
-    "Apuntes completos para preparar el examen de LDAW",
-    new Usuario("Juan Pérez", "juan.perez@example.com"),
-    5000,
-  ),
-
-  new PublicacionServicio(
-    "Clases de Node.js",
-    "Clases particulares de Node.js",
-    new Usuario("María López", "maria.lopez@example.com"),
-    3000,
-  ),
-
-  new PublicacionVenta(
-    "Resumen examen final LDAW",
-    "Resumen del examen final de LDAW",
-    new Usuario("Carlos García", "carlos.garcia@example.com"),
-    4000,
-  ),
-
-  new PublicacionServicio(
-    "Ayuda con proyecto de LDAW",
-    "Ayuda para realizar el proyecto final",
-    new Usuario("Juan Pérez", "juan.perez@example.com"),
-    "Presencial",
-  ),
-];
-console.log("Publicaciones:");
-console.log("================================");
-
-publicaciones.forEach((publicacion) => {
-  console.log(publicacion.mostrarResumen());
-});
-
-publicaciones[1].activa = false;
-
-console.log("================================");
-
-const publicacionesActivas = publicaciones.filter((publicacion) =>
-  publicacion.estaActiva(),
-);
-
-console.log("Publicaciones activas:" + publicacionesActivas.length);
-
-console.log("================================");
-
-const primeraPublicacion = publicaciones.find(
-  (publicacion) => publicacion.autor.nombre === "Juan Pérez",
-);
-if (primeraPublicacion) {
-  console.log(
-    "Primera publicación de Juan Pérez: " + primeraPublicacion.mostrarResumen(),
-  );
-}
-
-const repositorio = new RepositorioPublicaciones();
-
-repositorio.agregar(publicaciones[0]);
-repositorio.agregar(publicaciones[1]);
-repositorio.agregar(publicaciones[2]);
-repositorio.agregar(publicaciones[3]);
-
-console.log("================================");
-
-const publicacionesDeJuan = repositorio.buscarPorUsuario("Juan Pérez");
-console.log("Publicaciones de Juan Pérez:" + publicacionesDeJuan.length);
-
-const publicacionesDeMaria = repositorio.buscarPorUsuario("Maria López");
-console.log("Publicaciones de Maria López:" + publicacionesDeMaria.length);
-
-const publicacionesDeCarlos = repositorio.buscarPorUsuario("Carlos García");
-console.log("Publicaciones de Carlos García:" + publicacionesDeCarlos.length);
-
-console.log("================================");
-
-const publicacionesActivasRepositorio = repositorio.filtrarActivas();
-console.log(
-  "Total de publicaciones activas en el repositorio:" +
-    publicacionesActivasRepositorio.length,
-);
-
-console.log("================================");
-
-const totalPublicacionesRepositorio = repositorio.cantidadTotal();
-console.log(
-  "Total de publicaciones en el repositorio:" + totalPublicacionesRepositorio,
-);
-
-publicaciones.forEach((p) => {
-  console.log(p instanceof Publicacion);
-});
-
-console.log("================================");
-
-const publicacionesVenta = repositorio.listarPorTipo(PublicacionVenta);
-
-console.log("Publicaciones de venta:", publicacionesVenta);
-
-const publicacionesServicio = repositorio.listarPorTipo(PublicacionServicio);
-
-console.log("Publicaciones de servicio:", publicacionesServicio);
-
-console.log("================================");
-
-publicaciones.forEach((publicacion) => {
-  console.log(publicacion instanceof Publicacion);
-});
-
-publicaciones.forEach((p) => {
-  console.log(p.mostrarResumen()); // polimorfismo : cada p responde distinto
-});
-
-// Le pasás la clase en sí (ej: PublicacionVenta), NO un string ("PublicacionVenta")
-const soloVentas = repositorio.filtrarPorTipo(PublicacionVenta);
-const soloServicios = repositorio.filtrarPorTipo(PublicacionServicio);
-
-console.log("Ventas:", soloVentas);
-console.log("Servicios:", soloServicios);
-
-
 // Juan agrega a María y a Carlos a su lista de contactos
 usuarios[0].agregarContacto(usuarios[1]);
 usuarios[0].agregarContacto(usuarios[2]);
-
-// Verificás que la auto-asociación guardó correctamente las instancias
-console.log(`Contactos`)
-console.log(usuarios[0].contactos);
+console.log(`Contactos de ${usuarios[0].nombre}:`, usuarios[0].contactos.map(c => c.nombre));
 
 
-//Listeners
+console.log("\n=== 2. CREACIÓN DE PUBLICACIONES (ROLES) ===");
+// Usamos las instancias del array 'usuarios' para mantener la asociación correcta
+const publicaciones = [
+  new PublicacionVenta(
+    "Apuntes de LDAW",
+    "Apuntes completos",
+    usuarios[0], // Autor
+    5000
+  ),
+  new PublicacionServicio(
+    "Clases de Node.js",
+    "Clases particulares",
+    usuarios[1], // Autor
+    "Virtual",
+    120,
+    usuarios[2]  // Cliente (Parte 2.5)
+  )
+];
 
-const repositorioListener = new RepositorioPublicaciones();
 
-repositorioListener.on("publicacionAgregada", (publicacion) => {
-  console.log(`[Listener 1] ¡Nueva Publicacion!: ${publicacion.titulo}`);
+console.log("\n=== 3. VALIDACIÓN Y DEPENDENCIA ===");
+const repositorio = new RepositorioPublicaciones();
+
+
+const reglasDeValidacion = {
+  minTitulo: 5,
+  ventasMinimas: 1 
+};
+
+publicaciones.forEach(pub => {
+  // Simulamos el atributo ventas para que pase tu validación
+  pub.ventas = 5; 
+
+  // Usamos la dependencia (reglasDeValidacion)
+  if (validarPublicacion(pub, reglasDeValidacion)) {
+    repositorio.agregar(pub);
+    console.log(`✅ Publicación agregada con éxito: ${pub.titulo}`);
+  } else {
+    console.log(`❌ La publicación no cumple las reglas: ${pub.titulo}`);
+  }
 });
 
-repositorioListener.on("publicacionAgregada", () => {
-  const fecha = new Date().toLocaleTimeString();
-  console.log(`[Listener 2] ¡Publicación agregada al sistema el ${fecha}`);
-});
 
-repositorioListener.agregar({ titulo: "Mi primera publicación" });
+console.log("\n=== 4. MÉTODOS POLIMÓRFICOS EN REPOSITORIO ===");
 
-console.log("Publicando...");
+// Probamos listarResumenes() (Debería usar .map internamente)
+console.log("Resúmenes en el repositorio:");
+console.log(repositorio.listarResumenes());
 
-publicarConDemora({ titulo: "Post asincrónico" }, () => {
-  console.log("Callback se ejecutó, publicación lista!");
-});
+// Probamos filtrarPorTipo() pasándole la clase constructora
+const soloVentas = repositorio.filtrarPorTipo(PublicacionVenta);
+const soloServicios = repositorio.filtrarPorTipo(PublicacionServicio);
 
-console.log("Fin. (no esperó el Timeout");
-
-function publicacionConDemoraAsync(publicacion) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(publicacion);
-    }, 2000);
-  });
-}
-
-async function main() {
-  const publicacion = await publicacionConDemoraAsync(publicaciones[3]);
-  repositorio.agregar(publicacion);
-  console.log("Esto se imprime después de la demora")
-}
-main();
+console.log(`Cantidad de ventas: ${soloVentas.length}`);
+console.log(`Cantidad de servicios: ${soloServicios.length}`);
