@@ -1,0 +1,125 @@
+/* Reset básico y tipografía */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  background-color: #f4f6f8;
+  color: #333;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Formulario principal */
+#form-publicacion {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Campos de entrada, selects y textarea */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.15);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Contenedor de campos específicos (dinámicos) */
+#campos-especificos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Texto de ayuda en email */
+#ayuda-email {
+  color: #666;
+  font-size: 0.85rem;
+  margin-top: -10px;
+}
+
+/* Botón principal */
+button {
+  background-color: #0066cc;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #004b99;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Vista previa */
+#vista-previa {
+  display: block;
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #eef6ff;
+  border-left: 4px solid #0066cc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #004080;
+}
+
+/* Lista y tarjetas de publicaciones */
+#lista-publicaciones {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tarjeta-publicacion {
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: 8px;
+  border: 1px solid #e1e4e8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tarjeta-publicacion.inactiva {
+  opacity: 0.6;
+  background-color: #f9f9f9;
+}

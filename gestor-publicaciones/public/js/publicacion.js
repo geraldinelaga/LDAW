@@ -50,6 +50,10 @@ class Publicacion {
     const ms = new Date() - this.fechaPublicacion;
     return Math.floor(ms / (1000 * 60 * 60 * 24)); //la operación lo pasa a días y el floor redondea para abajo.
   }
+
+  darDeBaja() {
+    this.activa =false;
+  }
 }
 
 export default Publicacion;

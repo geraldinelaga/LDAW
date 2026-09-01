@@ -1,6 +1,4 @@
-import { EventEmitter } from "node:events";
-
-class RepositorioPublicaciones extends EventEmitter {
+class RepositorioPublicaciones extends EventTarget {
   constructor() {
     super();
     this.publicaciones = [];
@@ -8,7 +6,9 @@ class RepositorioPublicaciones extends EventEmitter {
 
   agregar(publicacion) {
     this.publicaciones.push(publicacion);
-    this.emit("publicacionAgregada", publicacion);
+    this.dispatchEvent(
+      new CustomEvent("publicacionAgregada", { detail: publicacion }),
+    );
   }
 
   buscarPorUsuario(nombre) {

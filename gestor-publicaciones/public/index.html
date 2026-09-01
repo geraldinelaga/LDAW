@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestor de Publicaciones</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Gestor de Publicaciones</h1>
+      </header>
+
+      <form id="form-publicacion">
+        <input id="titulo" placeholder="Título" required />
+        <textarea id="descripcion" placeholder="Descripción"></textarea>
+        <input id="autor" placeholder="Nombre del autor" required />
+        <input id="email" type="email" placeholder="Email" required />
+        <small id="ayuda-email"></small>
+        <select id="tipo">
+          <option value="venta">Venta</option>
+          <option value="servicio">Servicio</option>
+        </select>
+        <div id="campos-especificos"></div>
+        <button>Publicar</button>
+      </form>
+      <output id="vista-previa"></output>
+      <section id="lista-publicaciones"></section>
+    </main>
+  </body>
+  <script type="module" src="js/main.js"></script>
+</html>
